@@ -36,13 +36,16 @@
                         </div>
                     </header>
                 </div>
-                <div class="col-8 h-100 bg-danger">
+                <div class="col-8 h-100 chat-bg d-flex flex-column">
                     <header class="profile header-bg p-2 pe-0 d-flex justify-content-between align-items-center ">
                         <div class="d-flex align-items-center">
                             <figure class="img-wrapper rounded-circle overflow-hidden m-0 me-2">
-                                <img class="w-100 h-100" :src="'./img/avatar' + activeProfile.avatar + '.jpg'" alt="activeProfile.name">
+                                <img class="w-100 h-100" :src="'./img/avatar' + currentChatProfile.avatar + '.jpg'" alt="activeProfile.name">
                             </figure>
-                            <div>{{activeProfile.name}}</div>
+                            <div>
+                                <div>{{currentChatProfile.name}}</div>
+                                <div class="my-text-secondary fs-small">Ultimo accesso oggi alle 12:00</div>
+                            </div>
                         </div>
                         <div>
                             <i class="fa-solid my-text-secondary fa-magnifying-glass me-3"></i>
@@ -50,6 +53,24 @@
                             <i class="fa-solid my-text-secondary fa-ellipsis-vertical me-3"></i>
                         </div>
                     </header>
+                    <section class="chat flex-grow-1 overflow-scroll">
+                        <div class="row px-2 px-md-5">
+                            <div v-for="message in currentChatProfile.messages" class="col-12 px-lg-5 py-1 d-flex " :class="(message.status === 'sent')? 'justify-content-end' : '' ">
+                                <div :class="'message-' + message.status" class="rounded-2 p-2 w-100">{{message.message}}</div>
+                            </div>
+                        </div>
+                    </section>
+                    <footer class="row align-items-center g-0 message-input-container py-2">
+                        <div class="col-1 text-center">
+                            <i class="fa-regular fa-face-smile"></i>
+                        </div>
+                        <div class="col-10">
+                            <input class="w-100 border-0 rounded-1 px-2 py-1" type="text" name="messageToSend" id="messageToSend" placeholder="Scrivi un messaggio">
+                        </div>
+                        <div class="col-1 text-center">
+                            <i class="fa-solid fa-microphone"></i>
+                        </div>
+                    </footer>
                 </div>
             </div>
         </section>

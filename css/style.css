@@ -9,6 +9,19 @@ main{
     max-width: 1200px;
 }
 
+.message-sent,
+.message-received{
+    max-width: 45%;
+}
+.message-sent{
+    background-color: #d5f9ba;
+}
+.message-received{
+    background-color: #fff;
+}
+.message-input-container{
+    background-color: #f3eeea;
+}
 
 /* bacgrounds */
 .top-bg{
@@ -27,7 +40,12 @@ main{
 
 /* text colors */
 .my-text-secondary{
-    color: #b1b1b1;
+    color: #979797;
+}
+
+/* fonts */
+.fs-small{
+    font-size: small;
 }
 
 /* profile icons */
