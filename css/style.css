@@ -3,18 +3,38 @@ main{
     height: -webkit-fill-available;
     background-color: aqua;
 }
+.wrapper{
+    height: 90vh;
+    width: 100%;
+    max-width: 1200px;
+}
 
-.topBg{
+
+/* bacgrounds */
+.top-bg{
     background-color: #009688;
     height: 120px;
 }
-.bottomBg{
+.bottom-bg{
     background-color: #d8dbd4;
 }
-.chatBg{
+.header-bg{
+    background-color: #eaeaea;
+}
+.chat-bg{
     background:url('../img/mine.jpg');
 }
-.wrapper{
-    height: 80vh;
-    max-width: 992px;
+
+/* text colors */
+.my-text-secondary{
+    color: #b1b1b1;
+}
+
+/* profile icons */
+figure.img-wrapper{
+    width: 50px;
+    height: 50px;
+}
+figure.img-wrapper img{
+    object-fit: cover;
 }

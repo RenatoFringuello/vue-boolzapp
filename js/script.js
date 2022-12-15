@@ -3,7 +3,10 @@ const { createApp } = Vue;
 createApp({
     data(){
         return{
-            currentChat : 'Michele',
+            activeProfile : {
+                name: 'Sofia',
+                avatar: '_io'
+            },
             contacts: [
                 {
                     name: 'Michele',
