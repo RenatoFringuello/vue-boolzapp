@@ -179,6 +179,7 @@ createApp({
 
     methods : {
         openChat(index){
+            index = (typeof index === typeof '') ? parseInt(index.substr(1, index.length-1),10) - 1 : index;
             this.currentChatProfile = this.contacts[index];
         },
         checkUsers(){
@@ -195,7 +196,7 @@ createApp({
         getFeedback(){
             this.currentChatProfile.messages.push({
                 // date: '10/01/2020 16:15:22',
-                message: 'ok come vuoi',
+                message: 'ok, grazie',
                 status: 'received'
             });
             this.contacts[this.contacts.indexOf(this.currentChatProfile)].messages = this.currentChatProfile.messages;
