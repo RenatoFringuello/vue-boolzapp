@@ -22,7 +22,7 @@ main{
 
 /* chat */
 .chat{
-    height: calc(100% - 107.5px);
+    height: calc(100% - 109px);
 }
 
 .message-sent,
@@ -68,8 +68,8 @@ main{
 /* profile icons */
 figure.img-wrapper,
 div.icon-wrapper{
-    width:  40px;
-    height: 40px;
+    width:  45px;
+    height: 45px;
 }
 figure.img-wrapper img{
     object-fit: cover;
