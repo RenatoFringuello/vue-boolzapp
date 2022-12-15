@@ -180,6 +180,14 @@ createApp({
         openChat(index){
             this.currentChatProfile = this.contacts[index];
         },
+        getFeedback(){
+            this.currentChatProfile.messages.push({
+                // date: '10/01/2020 16:15:22',
+                message: 'ok come vuoi',
+                status: 'received'
+            });
+            this.contacts[this.contacts.indexOf(this.currentChatProfile)].messages = this.currentChatProfile.messages;
+        },
         sendMessage(){
             this.currentChatProfile.messages.push({
                 // date: '10/01/2020 16:15:22',
@@ -188,6 +196,7 @@ createApp({
             });
             this.contacts[this.contacts.indexOf(this.currentChatProfile)].messages = this.currentChatProfile.messages;
             this.messageToSend = '';
+            setTimeout(this.getFeedback ,1000);
         }
     },
     created(){
