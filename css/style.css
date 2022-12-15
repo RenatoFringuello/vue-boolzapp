@@ -16,6 +16,10 @@ main{
     color: #8edafc;
 }
 
+.contact{
+    cursor: pointer;
+}
+
 .contact-bg-active{
     background-color: #e9ebeb;
 }

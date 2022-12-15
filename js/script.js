@@ -194,5 +194,11 @@ createApp({
             ]
             
         }
+    },
+
+    methods : {
+        openChat(index){
+            this.currentChatProfile = this.contacts[index];
+        }
     }
 }).mount('#app');
