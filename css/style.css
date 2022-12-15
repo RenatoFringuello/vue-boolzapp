@@ -6,10 +6,6 @@ main{
     width: 80%;
 }
 /* contact */
-.contacts-wrapper .contacts{
-    /* height: calc(100% - 186px); */
-}
-
 .my-alert{
     background-color: #8edafc;
 }
@@ -25,6 +21,9 @@ main{
 }
 
 /* chat */
+.chat{
+    height: calc(100% - 107.5px);
+}
 
 .message-sent,
 .message-received{
