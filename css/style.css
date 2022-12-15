@@ -1,19 +1,31 @@
 main{
     height: 100vh;
-    height: -webkit-fill-available;
-    background-color: aqua;
 }
 .wrapper{
-    height: 90vh;
-    width: 100%;
-    max-width: 1200px;
+    height: calc(100% - 2rem);
+    width: 80%;
 }
 /* contact */
+.contacts-wrapper .contacts{
+    /* height: calc(100% - 186px); */
+}
+
+.my-alert{
+    background-color: #8edafc;
+}
+.my-alert .icon-wrapper{
+    background-color: #f2fbff;
+}
+.my-alert .icon-wrapper .icon{
+    color: #8edafc;
+}
+
 .contact-bg-active{
     background-color: #e9ebeb;
 }
 
 /* chat */
+
 .message-sent,
 .message-received{
     max-width: 45%;
@@ -55,9 +67,10 @@ main{
 }
 
 /* profile icons */
-figure.img-wrapper{
-    width: 50px;
-    height: 50px;
+figure.img-wrapper,
+div.icon-wrapper{
+    width:  40px;
+    height: 40px;
 }
 figure.img-wrapper img{
     object-fit: cover;
