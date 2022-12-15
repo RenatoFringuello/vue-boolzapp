@@ -3,6 +3,7 @@ const { createApp } = Vue;
 createApp({
     data(){
         return{
+            contactToSearch : '',
             messageToSend : '',
             currentChatProfile :'',
             activeProfile : {
@@ -171,14 +172,25 @@ createApp({
                         }
                     ],
                 },
-            ]
-            
+            ],
+            contactsFound : []
         }
     },
 
     methods : {
         openChat(index){
             this.currentChatProfile = this.contacts[index];
+        },
+        checkUsers(){
+            //es. scrivendo 's' trova 'Alessandro', l'esercizio chiedeva una ricerca che restituisse tutti i nomi che contengono la stringa cercata
+            if(this.contactToSearch !== '' || this.contactToSearch == undefined){
+                this.contactsFound = this.contacts.filter((contact)=>{
+                    return contact.name.includes(this.contactToSearch);
+                });
+            }
+            else{
+                this.contactsFound = this.contacts;
+            }
         },
         getFeedback(){
             this.currentChatProfile.messages.push({
@@ -200,6 +212,7 @@ createApp({
         }
     },
     created(){
+        this.contactsFound = this.contacts;
         this.openChat(0);
     }
 }).mount('#app');

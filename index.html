@@ -38,7 +38,7 @@
                         </div>
                     </header>
                     <section class="contacts-wrapper h-100 overflow-scroll">
-                        <div class="contacts-top sticky-top">
+                        <div class="contacts-top sticky-top position-relative">
                             <!-- alert -->
                             <div class="my-alert p-3 d-flex">
                                 <div class="icon-wrapper d-flex rounded-circle overflow-hidden m-0 me-2">
@@ -54,12 +54,12 @@
                                 <span class="border px-4 bg-white d-flex" id="addon-wrapping">
                                     <i class="fa-solid my-text-secondary fa-magnifying-glass fs-small m-auto"></i>
                                 </span>
-                                <input class="border w-100 px-2 py-1" type="text" name="contactToSearch" id="contactToSearch" placeholder="Cerca o inizia una nuova chat" aria-describedby="addon-wrapping">
+                                <input @keyUp="checkUsers()" v-model="contactToSearch" class="border w-100 px-2 py-1" type="text" name="contactToSearch" id="contactToSearch" placeholder="Cerca o inizia una nuova chat" aria-describedby="addon-wrapping">
                             </div>
                         </div>
                         <!-- all contacts chat -->
                         <div class="contacts-bottom">
-                            <div class="contact p-2 border-top border-1 d-flex justify-content-between align-items-center" @click="openChat(i)" v-for="contact, i in contacts" :class="(contact.avatar === currentChatProfile.avatar) ? 'contact-bg-active' : '' " >
+                            <div class="contact p-2 border-top border-1 d-flex justify-content-between align-items-center" @click="openChat(i)" v-for="contact, i in contactsFound" :class="(contact.avatar === currentChatProfile.avatar) ? 'contact-bg-active' : '' " >
                                 <div class="d-flex align-items-center">
                                     <figure class="img-wrapper rounded-circle overflow-hidden m-0 me-2">
                                         <img class="w-100 h-100" :src="'./img/avatar' + contact.avatar + '.jpg'" alt="contact.name">
