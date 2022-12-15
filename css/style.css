@@ -8,7 +8,12 @@ main{
     width: 100%;
     max-width: 1200px;
 }
+/* contact */
+.contact-bg-active{
+    background-color: #e9ebeb;
+}
 
+/* chat */
 .message-sent,
 .message-received{
     max-width: 45%;
@@ -21,6 +26,7 @@ main{
 }
 .message-input-container{
     background-color: #f3eeea;
+    color:#6b7376;
 }
 
 /* bacgrounds */
