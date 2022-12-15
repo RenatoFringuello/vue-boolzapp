@@ -29,16 +29,31 @@ main{
     height: calc(100% - 109px);
 }
 
-.message-sent,
-.message-received{
+.message{
     max-width: 45%;
 }
+/* message sent */
 .message-sent{
     background-color: #d5f9ba;
 }
+.message-sent:hover .chevron{
+    background: radial-gradient(#d5f9ba 30%, #0000 );
+}
+/* message received */
 .message-received{
     background-color: #fff;
 }
+.message-received:hover .chevron{
+    background: radial-gradient(#fff 30%, #0000 );
+}
+/* chevron */
+.chevron{
+    cursor: pointer;
+}
+.message:hover .chevron::after{
+    content: '\f078';
+}
+
 .message-input-container{
     background-color: #f3eeea;
     color:#6b7376;
@@ -67,6 +82,9 @@ main{
 /* fonts */
 .fs-small{
     font-size: small;
+}
+.fs-x-small{
+    font-size: x-small;
 }
 
 /* profile icons */

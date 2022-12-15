@@ -96,7 +96,15 @@
                     <section class="chat overflow-scroll">
                         <div class="row g-0 px-2 px-md-5">
                             <div v-for="message in currentChatProfile.messages" class="col-12 px-lg-5 py-1 d-flex " :class="(message.status === 'sent')? 'justify-content-end' : '' ">
-                                <div :class="'message-' + message.status" class="rounded-2 p-2 w-100">{{message.message}}</div>
+                                <div :class="'message-' + message.status" class="message position-relative rounded-2 d-flex justify-content-between align-items-end p-2 w-100">
+                                    <div class="message-text">{{message.message}}</div>
+                                    <div class="message-left">
+                                        <div class="message-time my-text-secondary">
+                                            <i  class="fa-solid fs-small chevron p-2 position-absolute top-0 end-0"></i>
+                                            <div class="my-text-secondary fs-x-small">12:00</div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </section>
