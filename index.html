@@ -106,7 +106,7 @@
                             <i class="fa-regular fa-face-smile"></i>
                         </div>
                         <div class="col-10">
-                            <input class="w-100 border-0 rounded-1 px-2 py-1" type="text" name="messageToSend" id="messageToSend" placeholder="Scrivi un messaggio">
+                            <input class="w-100 border-0 rounded-1 px-2 py-1" @keyUp.Enter="sendMessage()" v-model="messageToSend" type="text" name="messageToSend" id="messageToSend" placeholder="Scrivi un messaggio">
                         </div>
                         <div class="col-1 text-center">
                             <i class="fa-solid fa-microphone"></i>

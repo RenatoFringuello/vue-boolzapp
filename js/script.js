@@ -3,31 +3,11 @@ const { createApp } = Vue;
 createApp({
     data(){
         return{
+            messageToSend : '',
+            currentChatProfile :'',
             activeProfile : {
                 name: 'Sofia',
                 avatar: '_io'
-            },
-            currentChatProfile : {
-                name: 'Michele',
-                avatar: '_1',
-                visible: true,
-                messages: [
-                    {
-                        date: '10/01/2020 15:30:55',
-                        message: 'Hai portato a spasso il cane?',
-                        status: 'sent'
-                    },
-                    {
-                        date: '10/01/2020 15:50:00',
-                        message: 'Ricordati di stendere i panni',
-                        status: 'sent'
-                    },
-                    {
-                        date: '10/01/2020 16:15:22',
-                        message: 'Tutto fatto!',
-                        status: 'received'
-                    }
-                ],
             },
             contacts: [
                 {
@@ -199,6 +179,18 @@ createApp({
     methods : {
         openChat(index){
             this.currentChatProfile = this.contacts[index];
+        },
+        sendMessage(){
+            this.currentChatProfile.messages.push({
+                // date: '10/01/2020 16:15:22',
+                message: this.messageToSend,
+                status: 'sent'
+            });
+            this.contacts[this.contacts.indexOf(this.currentChatProfile)].messages = this.currentChatProfile.messages;
+            this.messageToSend = '';
         }
+    },
+    created(){
+        this.openChat(0);
     }
 }).mount('#app');
