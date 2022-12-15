@@ -1,0 +1,20 @@
+main{
+    height: 100vh;
+    height: -webkit-fill-available;
+    background-color: aqua;
+}
+
+.topBg{
+    background-color: #009688;
+    height: 120px;
+}
+.bottomBg{
+    background-color: #d8dbd4;
+}
+.chatBg{
+    background:url('../img/mine.jpg');
+}
+.wrapper{
+    height: 80vh;
+    max-width: 992px;
+}
