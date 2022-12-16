@@ -3,6 +3,7 @@ const { createApp } = Vue;
 createApp({
     data(){
         return{
+            words : parole,
             DateTime : luxon.DateTime,
             messageSettingsClicked : {
                 chatIndex : '',
@@ -263,25 +264,33 @@ createApp({
         getFeedback(){
             this.currentChatProfile.messages.push({
                 date: this.setDateTime(),
-                message: 'ok va bene',
+                message: this.getReply(Math.floor(Math.random() * (15 + 1))),
                 status: 'received'
             });
             this.contacts[this.contacts.indexOf(this.currentChatProfile)].messages = this.currentChatProfile.messages;
         },
-        
+        getReply(nWords){
+            let sentence = '';
+            for (let i = 0; i < nWords; i++) {
+                sentence += this.words[Math.floor(Math.random() * this.words.length -1)] + ' ';
+            }
+            return sentence;
+        },
         /**
          * send the user message and call a reply after 1 second with getFeedback
          */
         sendMessage(){
-            console.log(this.setDateTime())
-            this.currentChatProfile.messages.push({
-                date: this.setDateTime(),
-                message: this.messageToSend,
-                status: 'sent'
-            });
-            this.contacts[this.contacts.indexOf(this.currentChatProfile)].messages = this.currentChatProfile.messages;
+            if(this.messageToSend.trim() !== ''){
+
+                this.currentChatProfile.messages.push({
+                    date: this.setDateTime(),
+                    message: this.messageToSend.trim(),
+                    status: 'sent'
+                });
+                this.contacts[this.contacts.indexOf(this.currentChatProfile)].messages = this.currentChatProfile.messages;
+                setTimeout(this.getFeedback ,1000);
+            }
             this.messageToSend = '';
-            setTimeout(this.getFeedback ,1000);
         },
         /**
          * is a toggle to open/close a message settings
