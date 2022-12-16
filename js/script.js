@@ -9,7 +9,7 @@ createApp({
             },
             contactToSearch : '',
             messageToSend : '',
-            currentChatProfile :'',
+            currentChatProfile :'',//meglio salvare l'indice della chat che l'intero oggetto; modifica alla fine
             activeProfile : {
                 name: 'Sofia',
                 avatar: '_io'
@@ -196,6 +196,15 @@ createApp({
         checkIndex(index){
             return (typeof index === typeof '') ? parseInt(index.substr(1, index.length-1),10) - 1 : index
         },
+        /** 
+         * reset the messageClicked object
+        */
+        resetMessageClicked(){
+            this.messageSettingsClicked = {
+                chatIndex : '',
+                messageIndex : ''
+            }
+        },
         /**
          * open the chat at index.
          * Must be the 'avatar' key or the index for 'contacts'
@@ -208,18 +217,9 @@ createApp({
              * e si usa la key avatar in quanto è univoca e contiene il suo uid
              * dopo il primo carattere '_'
              */
-            index = this.checkIndex(index);
+            index = this.checkIndex(index, 1);
             this.currentChatProfile = this.contacts[index];
-            /** 
-             * resetto l'oggetto in modo che se vado ad aprire
-             * un'altra chat quando il setting è aperto, 
-             * non ci sarà bisogno di cliccare 2 volte per aprire un nuovo setting
-             * nella nuova chat
-            */
-            this.messageSettingsClicked = {
-                chatIndex : '',
-                messageIndex : ''
-            }
+            this.resetMessageClicked();
         },
         /**
          * check in contact if there is a name who includes the string typed.
@@ -255,6 +255,9 @@ createApp({
                 this.contactsFound = this.contacts;
             }
         },
+        /**
+         * get a reply to send to the user
+         */
         getFeedback(){
             this.currentChatProfile.messages.push({
                 // date: '10/01/2020 16:15:22',
@@ -263,6 +266,9 @@ createApp({
             });
             this.contacts[this.contacts.indexOf(this.currentChatProfile)].messages = this.currentChatProfile.messages;
         },
+        /**
+         * send the user message and call a reply after 1 second with getFeedback
+         */
         sendMessage(){
             this.currentChatProfile.messages.push({
                 // date: '10/01/2020 16:15:22',
@@ -273,11 +279,25 @@ createApp({
             this.messageToSend = '';
             setTimeout(this.getFeedback ,1000);
         },
+        /**
+         * is a toggle to open/close a message settings
+         * 
+         * @param {*} indexChat the chat index related to the message
+         * @param {*} indexMessage the message related to the settings
+         */
         toggleMessageSettings(indexChat, indexMessage){
             this.messageSettingsClicked = {
                 chatIndex : indexChat,
                 messageIndex : (indexMessage !== this.messageSettingsClicked.messageIndex) ? indexMessage : ''
             };
+        },
+        /**
+         * delete the message selected by the settings
+         */
+        deleteMessage(){
+            this.contacts[this.checkIndex(this.messageSettingsClicked.chatIndex)].messages.splice(this.messageSettingsClicked.messageIndex, 1);
+            this.currentChatProfile = this.contacts[this.checkIndex(this.messageSettingsClicked.chatIndex)];
+            this.resetMessageClicked();
         }
     },
     created(){

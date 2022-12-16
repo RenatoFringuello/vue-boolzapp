@@ -97,7 +97,7 @@
                                 <div :class="'message-' + message.status" class="message position-relative rounded-2 d-flex justify-content-between align-items-end p-2 w-100">
                                     <i @click="toggleMessageSettings(currentChatProfile.avatar, i)" class="fa-solid fs-small chevron p-2 position-absolute top-0 end-0 my-text-secondary"></i>
                                     <ul :class="(currentChatProfile.avatar === messageSettingsClicked.chatIndex && i === messageSettingsClicked.messageIndex) ? 'd-block' : 'd-none'" class="message-setting position-absolute list-unstyled bg-white">
-                                        <li class="settings-item p-2 border-bottom">Delete</li>
+                                        <li @click="deleteMessage()" class="settings-item p-2 border-bottom">Delete</li>
                                         <li class="settings-item p-2">Info Message</li>
                                     </ul>
                                     
