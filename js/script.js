@@ -179,6 +179,11 @@ createApp({
 
     methods : {
         openChat(index){
+            /**
+             * index sarà una stringa quando si clicca su una chat in lista
+             * e si usa la key avatar in quanto è univoca e contiene il suo uid
+             * dopo il primo carattere '_'
+             */
             index = (typeof index === typeof '') ? parseInt(index.substr(1, index.length-1),10) - 1 : index;
             this.currentChatProfile = this.contacts[index];
         },

@@ -1,5 +1,10 @@
 main{
     height: 100vh;
+    background: linear-gradient(to bottom,
+    #009688 0px,
+    #009688 15vh,
+    #d8dbd4 15vh,
+    #d8dbd4 100%);
 }
 .wrapper{
     height: calc(100% - 2rem);
@@ -60,13 +65,6 @@ main{
 }
 
 /* bacgrounds */
-.top-bg{
-    background-color: #009688;
-    height: 120px;
-}
-.bottom-bg{
-    background-color: #d8dbd4;
-}
 .header-bg{
     background-color: #eaeaea;
 }
