@@ -182,9 +182,26 @@ createApp({
     },
 
     methods : {
+        /**
+         * this function check if the param is a string.
+         * if is true then return just the parseInt (10) of the string from
+         * index[1] to index[index.length - 1].
+         * Doesn't convert the '_' in the string.
+         * 
+         * Meant to openChat, pass the 'avatar' key instead of a number
+         * 
+         * @param {*} index to check
+         * @returns an integer
+         */
         checkIndex(index){
             return (typeof index === typeof '') ? parseInt(index.substr(1, index.length-1),10) - 1 : index
         },
+        /**
+         * open the chat at index.
+         * Must be the 'avatar' key or the index for 'contacts'
+         * 
+         * @param {*} index of the chat to open
+         */
         openChat(index){
             /**
              * index sarà una stringa quando si clicca su una chat in lista
@@ -204,11 +221,34 @@ createApp({
                 messageIndex : ''
             }
         },
-        checkUsers(){
-            //es. scrivendo 's' trova 'Alessandro', l'esercizio chiedeva una ricerca che restituisse tutti i nomi che contengono la stringa cercata
+        /**
+         * check in contact if there is a name who includes the string typed.
+         * 
+         * es.
+         * writing 's' get 'Alessandro' and 'Sandro' too even if the 's' is 
+         * Lower Case
+         */
+        checkUsersIncludes(){
             if(this.contactToSearch !== '' || this.contactToSearch == undefined){
                 this.contactsFound = this.contacts.filter((contact)=>{
-                    return contact.name.includes(this.contactToSearch);
+                    return  contact.name.includes(this.contactToSearch) || 
+                            contact.name.includes(this.contactToSearch.charAt(0).toUpperCase() + this.contactToSearch.substr(1, this.contactToSearch.length - 1));
+                });
+            }
+            else{
+                this.contactsFound = this.contacts;
+            }
+        },
+        /**
+         * check in contact if there is a name which is equal to the string typed.
+         * 
+         * es.
+         * writing 's' don't get 'Alessandro' but get 'Sandro'
+         */
+        checkUsers(){
+            if(this.contactToSearch !== '' || this.contactToSearch == undefined){
+                this.contactsFound = this.contacts.filter((contact)=>{
+                    return contact.name.includes(this.contactToSearch.charAt(0).toUpperCase() + this.contactToSearch.substr(1, this.contactToSearch.length - 1));
                 });
             }
             else{
