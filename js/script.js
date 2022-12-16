@@ -4,10 +4,7 @@ createApp({
     data(){
         return{
             DateTime : luxon.DateTime,
-            messageSettingsClicked : {
-                chatIndex : '',
-                messageIndex : ''
-            },
+            messageIndex: '',
             contactToSearch : '',
             messageToSend : '',
             currentChatProfileID : 0,
@@ -201,30 +198,20 @@ createApp({
          * reset the messageClicked object
         */
         resetMessageClicked(){
-            this.messageSettingsClicked = {
-                chatIndex : '',
-                messageIndex : ''
-            };
+            this.messageIndex = '';
         },
         /**
          * open the chat at index.
-         * Must be the 'avatar' key or the index for 'contacts'
+         * Must be the 'avatar' key or the index for 'contacts'.
+         * 
+         * index sarà una stringa quando si clicca su una chat in lista
+         * e si usa la key avatar in quanto è univoca e contiene il suo uid
+         * dopo il primo carattere '_'
          * 
          * @param {*} index of the chat to open
          */
         openChat(index){
-            /**
-             * index sarà una stringa quando si clicca su una chat in lista
-             * e si usa la key avatar in quanto è univoca e contiene il suo uid
-             * dopo il primo carattere '_'
-             */
-            index = this.checkIndex(index, 1);
-            
-            //deve prendere solo index
-            // this.currentChatProfileID = this.contacts[index];
-            this.currentChatProfileID = index;
-
-
+            this.currentChatProfileID = this.checkIndex(index, 1);;
             this.resetMessageClicked();
         },
         /**
@@ -266,20 +253,11 @@ createApp({
          * The reply has a minimum of word of 1 and a maximum of 15
          */
         getFeedback(){
-            //current ora è un index da usare in contact
-
             this.contacts[this.currentChatProfileID].messages.push({
                 date: this.setDateTime(),
                 message: this.getReply(Math.floor(Math.random() * (15 + 1))),
                 status: 'received'
             });
-
-            // this.currentChatProfileID.messages.push({
-            //     date: this.setDateTime(),
-            //     message: this.getReply(Math.floor(Math.random() * (15 + 1))),
-            //     status: 'received'
-            // });
-            // this.contacts[this.contacts.indexOf(this.currentChatProfileID)].messages = this.currentChatProfileID.messages;
         },
         getReply(nWords){
             let sentence = '';
@@ -299,13 +277,6 @@ createApp({
                     message: this.messageToSend.trim(),
                     status: 'sent'
                 });
-
-                // this.currentChatProfileID.messages.push({
-                //     date: this.setDateTime(),
-                //     message: this.messageToSend.trim(),
-                //     status: 'sent'
-                // });
-                // this.contacts[this.contacts.indexOf(this.currentChatProfileID)].messages = this.currentChatProfileID.messages;
                 setTimeout(this.getFeedback ,1000);
             }
             this.messageToSend = '';
@@ -316,19 +287,15 @@ createApp({
          * @param {*} indexChat the chat index related to the message
          * @param {*} indexMessage the message related to the settings
          */
-        toggleMessageSettings(indexChat, indexMessage){
-            this.messageSettingsClicked = {
-                chatIndex : indexChat,
-                messageIndex : (indexMessage !== this.messageSettingsClicked.messageIndex) ? indexMessage : ''
-            };
+        toggleMessageSettings(indexMessage){
+            this.messageIndex = (indexMessage !== this.messageIndex) ? indexMessage : ''
         },
         /**
          * delete the message selected by the settings
          */
         deleteMessage(){
             //meglio destrutturare o spiegare meglio
-            this.contacts[this.checkIndex(this.messageSettingsClicked.chatIndex)].messages.splice(this.messageSettingsClicked.messageIndex, 1);
-            // this.currentChatProfileID = this.contacts[this.checkIndex(this.messageSettingsClicked.chatIndex)];
+            this.contacts[this.currentChatProfileID].messages.splice(this.messageIndex, 1);
             this.resetMessageClicked();
         },
         /**
@@ -352,7 +319,11 @@ createApp({
         }
     },
     created(){
-        this.contactsFound = this.contacts;
+        //adding the key lastDate to every chat in list for the date of last message sent
+        this.contactsFound = this.contacts.map(contact => {
+            return {lastDate: contact.messages[contact.messages.length -1].date, ...contact};
+        });
+        console.log(this.contactsFound); 
         this.openChat(this.currentChatProfileID);
     }
 }).mount('#app');

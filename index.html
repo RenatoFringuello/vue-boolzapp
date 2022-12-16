@@ -58,7 +58,7 @@
                         <!-- all contacts chat -->
                         <div class="contacts-bottom">
                             <div class="contact p-2 border-top border-1 position-relative d-flex justify-content-between align-items-center" @click="openChat(contact.avatar)" v-for="contact, i in contactsFound" :class="(contact.avatar === contacts[currentChatProfileID].avatar) ? 'contact-bg-active' : '' " >
-                                <div class="my-text-secondary fs-x-small position-absolute top-0 end-0 p-2">{{ getDateTime(contact.messages[contact.messages.length -1].date, 1, DateTime.TIME_24_SIMPLE) }}</div>
+                                <div class="my-text-secondary fs-x-small position-absolute top-0 end-0 p-2">{{ getDateTime(contact.lastDate, 1, DateTime.TIME_24_SIMPLE) }}</div>
 
                                 <div class="d-flex align-items-center">
                                     <figure class="img-wrapper rounded-circle overflow-hidden m-0 me-2">
@@ -97,8 +97,8 @@
                         <div class="row g-0 px-2 px-md-5">
                             <div v-for="message,i in contacts[currentChatProfileID].messages" class="col-12 px-lg-5 py-1 d-flex " :class="(message.status === 'sent')? 'justify-content-end' : '' ">
                                 <div :class="'message-' + message.status" class="message position-relative rounded-2 d-flex justify-content-between align-items-end p-2 w-100">
-                                    <i @click="toggleMessageSettings(contacts[currentChatProfileID].avatar, i)" class="fa-solid fs-small chevron p-2 position-absolute top-0 end-0 my-text-secondary"></i>
-                                    <ul :class="(contacts[currentChatProfileID].avatar === messageSettingsClicked.chatIndex && i === messageSettingsClicked.messageIndex) ? 'd-block' : 'd-none'" class="message-setting position-absolute list-unstyled bg-white">
+                                    <i @click="toggleMessageSettings(i)" class="fa-solid fs-small chevron p-2 position-absolute top-0 end-0 my-text-secondary"></i>
+                                    <ul :class="(i === messageIndex) ? 'd-block' : 'd-none'" class="message-setting position-absolute list-unstyled bg-white">
                                         <li @click="deleteMessage()" class="settings-item p-2 border-bottom">Delete</li>
                                         <li class="settings-item p-2">Info Message</li>
                                     </ul>
