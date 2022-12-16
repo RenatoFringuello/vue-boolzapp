@@ -83,7 +83,7 @@
                             </figure>
                             <div>
                                 <div>{{contacts[currentChatProfileID].name}}</div>
-                                <div class="my-text-secondary fs-small">Ultimo accesso oggi alle { getDateTime(contact.messages[contact.messages.length -1].date, 1, DateTime.TIME_24_SIMPLE) }</div>
+                                <div class="my-text-secondary fs-small">Ultimo accesso oggi alle {{ getDateTime(contactsFound[currentChatProfileID].lastDate, 1, DateTime.TIME_24_SIMPLE) }}</div>
                             </div>
                         </div>
                         <div>
