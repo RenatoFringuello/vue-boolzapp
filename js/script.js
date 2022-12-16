@@ -257,22 +257,25 @@ createApp({
             }
         },
         /**
-         * get a reply to send to the user
+         * get a reply to send to the user.
+         * The reply has a minimum of word of 1 and a maximum of 15
          */
         getFeedback(){
             this.currentChatProfile.messages.push({
-                // date: '10/01/2020 16:15:22',
-                message: 'ok, grazie',
+                date: this.setDateTime(),
+                message: 'ok va bene',
                 status: 'received'
             });
             this.contacts[this.contacts.indexOf(this.currentChatProfile)].messages = this.currentChatProfile.messages;
         },
+        
         /**
          * send the user message and call a reply after 1 second with getFeedback
          */
         sendMessage(){
+            console.log(this.setDateTime())
             this.currentChatProfile.messages.push({
-                // date: '10/01/2020 16:15:22',
+                date: this.setDateTime(),
                 message: this.messageToSend,
                 status: 'sent'
             });
@@ -310,6 +313,14 @@ createApp({
          */
         getDateTime(date, index, dateTimePreset){
             return this.DateTime.fromISO(date.split(' ')[index]).toLocaleString(dateTimePreset);
+        },
+        /**
+         * 
+         * @returns a string width a full datetime of now
+         */
+        setDateTime(){
+            const now = this.DateTime.now().toLocaleString(this.DateTime.DATETIME_SHORT_WITH_SECONDS).split(', ');
+            return `${now[0]} ${now[1]}`;
         }
     },
     created(){
