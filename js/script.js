@@ -3,6 +3,8 @@ const { createApp } = Vue;
 createApp({
     data(){
         return{
+            indexChatSettings: '',
+            indexMessageSettings: '',
             contactToSearch : '',
             messageToSend : '',
             currentChatProfile :'',
@@ -178,13 +180,16 @@ createApp({
     },
 
     methods : {
+        checkIndex(index){
+            return (typeof index === typeof '') ? parseInt(index.substr(1, index.length-1),10) - 1 : index
+        },
         openChat(index){
             /**
              * index sarà una stringa quando si clicca su una chat in lista
              * e si usa la key avatar in quanto è univoca e contiene il suo uid
              * dopo il primo carattere '_'
              */
-            index = (typeof index === typeof '') ? parseInt(index.substr(1, index.length-1),10) - 1 : index;
+            index = this.checkIndex(index);
             this.currentChatProfile = this.contacts[index];
         },
         checkUsers(){
@@ -215,6 +220,11 @@ createApp({
             this.contacts[this.contacts.indexOf(this.currentChatProfile)].messages = this.currentChatProfile.messages;
             this.messageToSend = '';
             setTimeout(this.getFeedback ,1000);
+        },
+        toggleMessageSettings(indexChat, indexMessage){
+            //se sono vuote chiudono se no prendono il valore che serve per aprire
+            this.indexChatSettings = indexChat;
+            this.indexMessageSettings = indexMessage;
         }
     },
     created(){
