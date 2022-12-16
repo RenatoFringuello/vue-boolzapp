@@ -3,7 +3,6 @@ const { createApp } = Vue;
 createApp({
     data(){
         return{
-            words : parole,
             DateTime : luxon.DateTime,
             messageSettingsClicked : {
                 chatIndex : '',
@@ -11,7 +10,7 @@ createApp({
             },
             contactToSearch : '',
             messageToSend : '',
-            currentChatProfile :'',//meglio salvare l'indice della chat che l'intero oggetto; modifica alla fine
+            currentChatProfileID : 0,
             activeProfile : {
                 name: 'Sofia',
                 avatar: '_io'
@@ -196,7 +195,7 @@ createApp({
          * @returns an integer
          */
         checkIndex(index){
-            return (typeof index === typeof '') ? parseInt(index.substr(1, index.length-1),10) - 1 : index
+            return (typeof index === typeof '') ? parseInt(index.substr(1, index.length-1),10) - 1 : index;
         },
         /** 
          * reset the messageClicked object
@@ -205,7 +204,7 @@ createApp({
             this.messageSettingsClicked = {
                 chatIndex : '',
                 messageIndex : ''
-            }
+            };
         },
         /**
          * open the chat at index.
@@ -220,7 +219,12 @@ createApp({
              * dopo il primo carattere '_'
              */
             index = this.checkIndex(index, 1);
-            this.currentChatProfile = this.contacts[index];
+            
+            //deve prendere solo index
+            // this.currentChatProfileID = this.contacts[index];
+            this.currentChatProfileID = index;
+
+
             this.resetMessageClicked();
         },
         /**
@@ -262,17 +266,25 @@ createApp({
          * The reply has a minimum of word of 1 and a maximum of 15
          */
         getFeedback(){
-            this.currentChatProfile.messages.push({
+            //current ora è un index da usare in contact
+
+            this.contacts[this.currentChatProfileID].messages.push({
                 date: this.setDateTime(),
                 message: this.getReply(Math.floor(Math.random() * (15 + 1))),
                 status: 'received'
             });
-            this.contacts[this.contacts.indexOf(this.currentChatProfile)].messages = this.currentChatProfile.messages;
+
+            // this.currentChatProfileID.messages.push({
+            //     date: this.setDateTime(),
+            //     message: this.getReply(Math.floor(Math.random() * (15 + 1))),
+            //     status: 'received'
+            // });
+            // this.contacts[this.contacts.indexOf(this.currentChatProfileID)].messages = this.currentChatProfileID.messages;
         },
         getReply(nWords){
             let sentence = '';
             for (let i = 0; i < nWords; i++) {
-                sentence += this.words[Math.floor(Math.random() * this.words.length -1)] + ' ';
+                sentence += parole[Math.floor(Math.random() * parole.length -1)] + ' ';
             }
             return sentence;
         },
@@ -282,12 +294,18 @@ createApp({
         sendMessage(){
             if(this.messageToSend.trim() !== ''){
 
-                this.currentChatProfile.messages.push({
+                this.contacts[this.currentChatProfileID].messages.push({
                     date: this.setDateTime(),
                     message: this.messageToSend.trim(),
                     status: 'sent'
                 });
-                this.contacts[this.contacts.indexOf(this.currentChatProfile)].messages = this.currentChatProfile.messages;
+
+                // this.currentChatProfileID.messages.push({
+                //     date: this.setDateTime(),
+                //     message: this.messageToSend.trim(),
+                //     status: 'sent'
+                // });
+                // this.contacts[this.contacts.indexOf(this.currentChatProfileID)].messages = this.currentChatProfileID.messages;
                 setTimeout(this.getFeedback ,1000);
             }
             this.messageToSend = '';
@@ -308,8 +326,9 @@ createApp({
          * delete the message selected by the settings
          */
         deleteMessage(){
+            //meglio destrutturare o spiegare meglio
             this.contacts[this.checkIndex(this.messageSettingsClicked.chatIndex)].messages.splice(this.messageSettingsClicked.messageIndex, 1);
-            this.currentChatProfile = this.contacts[this.checkIndex(this.messageSettingsClicked.chatIndex)];
+            // this.currentChatProfileID = this.contacts[this.checkIndex(this.messageSettingsClicked.chatIndex)];
             this.resetMessageClicked();
         },
         /**
@@ -334,6 +353,6 @@ createApp({
     },
     created(){
         this.contactsFound = this.contacts;
-        this.openChat(0);
+        this.openChat(this.currentChatProfileID);
     }
 }).mount('#app');
