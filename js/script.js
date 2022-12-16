@@ -258,6 +258,7 @@ createApp({
                 message: this.getReply(Math.floor(Math.random() * (15 + 1))),
                 status: 'received'
             });
+            this.mapContactsFound();
         },
         getReply(nWords){
             let sentence = '';
@@ -316,14 +317,16 @@ createApp({
         setDateTime(){
             const now = this.DateTime.now().toLocaleString(this.DateTime.DATETIME_SHORT_WITH_SECONDS).split(', ');
             return `${now[0]} ${now[1]}`;
+        },
+        mapContactsFound(){
+            this.contactsFound = this.contacts.map(contact => {
+                return {lastDate: contact.messages[contact.messages.length -1].date, ...contact};
+            });
         }
     },
     created(){
         //adding the key lastDate to every chat in list for the date of last message sent
-        this.contactsFound = this.contacts.map(contact => {
-            return {lastDate: contact.messages[contact.messages.length -1].date, ...contact};
-        });
-        console.log(this.contactsFound); 
+        this.mapContactsFound();
         this.openChat(this.currentChatProfileID);
     }
 }).mount('#app');
