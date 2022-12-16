@@ -3,6 +3,7 @@ const { createApp } = Vue;
 createApp({
     data(){
         return{
+            DateTime : luxon.DateTime,
             messageSettingsClicked : {
                 chatIndex : '',
                 messageIndex : ''
@@ -298,6 +299,17 @@ createApp({
             this.contacts[this.checkIndex(this.messageSettingsClicked.chatIndex)].messages.splice(this.messageSettingsClicked.messageIndex, 1);
             this.currentChatProfile = this.contacts[this.checkIndex(this.messageSettingsClicked.chatIndex)];
             this.resetMessageClicked();
+        },
+        /**
+         * get a string with date or time based on a provided preset
+         * 
+         * @param {*} date the datetime string
+         * @param {*} index 0 => date; 1 => time
+         * @param {*} dateTimePreset the preset to convert the date to locale string
+         * @returns a string date/time converted
+         */
+        getDateTime(date, index, dateTimePreset){
+            return this.DateTime.fromISO(date.split(' ')[index]).toLocaleString(dateTimePreset);
         }
     },
     created(){
