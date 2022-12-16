@@ -3,8 +3,10 @@ const { createApp } = Vue;
 createApp({
     data(){
         return{
-            indexChatSettings: '',
-            indexMessageSettings: '',
+            messageSettingsClicked : {
+                chatIndex : '',
+                messageIndex : ''
+            },
             contactToSearch : '',
             messageToSend : '',
             currentChatProfile :'',
@@ -191,6 +193,16 @@ createApp({
              */
             index = this.checkIndex(index);
             this.currentChatProfile = this.contacts[index];
+            /** 
+             * resetto l'oggetto in modo che se vado ad aprire
+             * un'altra chat quando il setting è aperto, 
+             * non ci sarà bisogno di cliccare 2 volte per aprire un nuovo setting
+             * nella nuova chat
+            */
+            this.messageSettingsClicked = {
+                chatIndex : '',
+                messageIndex : ''
+            }
         },
         checkUsers(){
             //es. scrivendo 's' trova 'Alessandro', l'esercizio chiedeva una ricerca che restituisse tutti i nomi che contengono la stringa cercata
@@ -222,9 +234,10 @@ createApp({
             setTimeout(this.getFeedback ,1000);
         },
         toggleMessageSettings(indexChat, indexMessage){
-            //se sono vuote chiudono se no prendono il valore che serve per aprire
-            this.indexChatSettings = indexChat;
-            this.indexMessageSettings = indexMessage;
+            this.messageSettingsClicked = {
+                chatIndex : indexChat,
+                messageIndex : (indexMessage !== this.messageSettingsClicked.messageIndex) ? indexMessage : ''
+            };
         }
     },
     created(){
