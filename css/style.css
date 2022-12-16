@@ -11,13 +11,13 @@ main{
     width: 80%;
 }
 /* contact */
-.my-alert{
+.my-banner{
     background-color: #8edafc;
 }
-.my-alert .icon-wrapper{
+.my-banner .icon-wrapper{
     background-color: #f2fbff;
 }
-.my-alert .icon-wrapper .icon{
+.my-banner .icon-wrapper .icon{
     color: #8edafc;
 }
 
