@@ -58,7 +58,7 @@
                         <!-- all contacts chat -->
                         <div class="contacts-bottom">
                             <div class="contact p-2 border-top border-1 position-relative d-flex justify-content-between align-items-center" @click="openChat(contact.avatar)" v-for="contact, i in contactsFound" :class="(contact.avatar === contacts[currentChatProfileID].avatar) ? 'contact-bg-active' : '' " >
-                                <div class="my-text-secondary fs-x-small position-absolute top-0 end-0 p-2">{{ getDateTime(contact.lastDate, 1, DateTime.TIME_24_SIMPLE) }}</div>
+                                <div class="my-text-secondary fs-x-small position-absolute top-0 end-0 p-2">{{ getDateTime(lastDates[checkIndex(contact.avatar)], 1, DateTime.TIME_24_SIMPLE) }}</div>
 
                                 <div class="d-flex align-items-center">
                                     <figure class="img-wrapper rounded-circle overflow-hidden m-0 me-2">
@@ -83,7 +83,7 @@
                             </figure>
                             <div>
                                 <div>{{contacts[currentChatProfileID].name}}</div>
-                                <div class="my-text-secondary fs-small">Ultimo accesso oggi alle {{ getDateTime(contactsFound[currentChatProfileID].lastDate, 1, DateTime.TIME_24_SIMPLE) }}</div>
+                                <div class="my-text-secondary fs-small">Ultimo accesso oggi alle {{ getDateTime(lastDates[currentChatProfileID], 1, DateTime.TIME_24_SIMPLE) }}</div>
                             </div>
                         </div>
                         <div>

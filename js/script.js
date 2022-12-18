@@ -4,6 +4,7 @@ createApp({
     data(){
         return{
             DateTime : luxon.DateTime,
+            lastDates : [],
             messageIndex: '',
             contactToSearch : '',
             messageToSend : '',
@@ -239,14 +240,14 @@ createApp({
          * writing 's' don't get 'Alessandro' but get 'Sandro'
          */
         checkUsers(){
-            if(this.contactToSearch !== '' || this.contactToSearch == undefined){
+            // if(this.contactToSearch !== '' || this.contactToSearch == undefined){
                 this.contactsFound = this.contacts.filter((contact)=>{
-                    return contact.name.includes(this.contactToSearch.charAt(0).toUpperCase() + this.contactToSearch.substr(1, this.contactToSearch.length - 1));
+                    return contact.name.includes(this.contactToSearch.trim().charAt(0).toUpperCase() + this.contactToSearch.trim().substr(1, this.contactToSearch.trim().length - 1));
                 });
-            }
-            else{
-                this.contactsFound = this.contacts;
-            }
+            // }
+            // else{
+            //     this.contactsFound = this.contacts;
+            // }
         },
         /**
          * get a reply to send to the user.
@@ -258,12 +259,15 @@ createApp({
                 message: this.getReply(Math.floor(Math.random() * (15 + 1))),
                 status: 'received'
             });
-            this.mapContactsFound();
+            this.contactsFound = this.contacts;
+            this.getLastSent();
+            this.checkUsers();
+            // this.mapContactsFound();
         },
         getReply(nWords){
             let sentence = '';
             for (let i = 0; i < nWords; i++) {
-                sentence += parole[Math.floor(Math.random() * parole.length -1)] + ' ';
+                sentence += parole[Math.floor(Math.random() *  (parole.length -1 + 1))] + ' ';
             }
             return sentence;
         },
@@ -297,7 +301,8 @@ createApp({
         deleteMessage(){
             //meglio destrutturare o spiegare meglio
             this.contacts[this.currentChatProfileID].messages.splice(this.messageIndex, 1);
-            this.resetMessageClicked();
+            // this.resetMessageClicked();
+            this.contactsFound = this.contacts;
         },
         /**
          * get a string with date or time based on a provided preset
@@ -318,15 +323,18 @@ createApp({
             const now = this.DateTime.now().toLocaleString(this.DateTime.DATETIME_SHORT_WITH_SECONDS).split(', ');
             return `${now[0]} ${now[1]}`;
         },
-        mapContactsFound(){
-            this.contactsFound = this.contacts.map(contact => {
-                return {lastDate: contact.messages[contact.messages.length -1].date, ...contact};
+        getLastSent(){
+            this.lastDates = this.contacts.map(contact => {
+                return contact.messages[contact.messages.length -1].date;
             });
         }
     },
     created(){
         //adding the key lastDate to every chat in list for the date of last message sent
-        this.mapContactsFound();
+        // this.mapContactsFound();
+        this.contactsFound = this.contacts;
+        this.getLastSent();
+
         this.openChat(this.currentChatProfileID);
     }
 }).mount('#app');
