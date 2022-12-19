@@ -105,3 +105,14 @@ div.icon-wrapper{
 figure.img-wrapper img{
     object-fit: cover;
 }
+
+/* headers */
+header .btns-wrapper i:hover{
+    cursor: pointer;
+    color: #7e7e7e;
+}
+/* footer - input */
+footer .btns-wrapper i:hover{
+    cursor: pointer;
+    color: #353a3b;
+}

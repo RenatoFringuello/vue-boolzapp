@@ -259,7 +259,7 @@ createApp({
         getReply(nWords){
             let sentence = '';
             for (let i = 0; i < nWords; i++) {
-                sentence += parole[this.getRandomInclusive(parole.length, 1)] + ' ';
+                sentence += parole[this.getRandomInclusive(parole.length-1, 1)] + ' ';
             }
             return sentence;
         },

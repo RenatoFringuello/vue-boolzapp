@@ -29,7 +29,7 @@
                             </figure>
                             <div>{{activeProfile.name}}</div>
                         </div>
-                        <div>
+                        <div class="btns-wrapper">
                             <i class="fa-solid my-text-secondary fa-circle-notch me-3"></i>
                             <i class="fa-solid my-text-secondary fa-message me-3"></i>
                             <i class="fa-solid my-text-secondary fa-ellipsis-vertical me-3"></i>
@@ -86,7 +86,7 @@
                                 <div class="my-text-secondary fs-small">Ultimo accesso oggi alle {{ getDateTime(lastDates[currentChatProfileID], 1, DateTime.TIME_24_SIMPLE) }}</div>
                             </div>
                         </div>
-                        <div>
+                        <div class="btns-wrapper">
                             <i class="fa-solid my-text-secondary fa-magnifying-glass me-3"></i>
                             <i class="fa-solid my-text-secondary fa-paperclip me-3"></i>
                             <i class="fa-solid my-text-secondary fa-ellipsis-vertical me-3"></i>
@@ -111,13 +111,13 @@
                     </section>
                     <!-- message input -->
                     <footer class="row align-items-center g-0 message-input-container py-2">
-                        <div class="col-1 text-center">
+                        <div class="col-1 text-center btns-wrapper">
                             <i class="fa-regular fa-face-smile"></i>
                         </div>
                         <div class="col-10">
                             <input class="w-100 border-0 rounded-1 px-2 py-1" @keyUp.Enter="sendMessage()" v-model="messageToSend" type="text" name="messageToSend" id="messageToSend" placeholder="Scrivi un messaggio">
                         </div>
-                        <div class="col-1 text-center">
+                        <div class="col-1 text-center btns-wrapper">
                             <i class="fa-solid fa-microphone"></i>
                         </div>
                     </footer>
