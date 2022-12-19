@@ -321,8 +321,9 @@ createApp({
          */
         getLastSent(){
             this.lastDates = this.contacts.map((contact, i) => {
+                console.log(typeof this.lastDates[i], this.lastDates[i]);
                 return (contact.messages.length === 0 && this.lastDates[i] === undefined) ? '' : 
-                        (this.lastDates[i] !== undefined) ? this.lastDates[i] : contact.messages[contact.messages.length -1].date;
+                        (contact.messages.length === 0) ? this.lastDates[i] : contact.messages[contact.messages.length -1].date;
             });
         }
     },
