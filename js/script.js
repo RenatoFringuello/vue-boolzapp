@@ -195,12 +195,6 @@ createApp({
         checkIndex(index){
             return (typeof index === typeof '') ? parseInt(index.substr(1, index.length-1),10) - 1 : index;
         },
-        /** 
-         * reset the messageClicked object
-        */
-        resetMessageClicked(){
-            this.messageIndex = '';
-        },
         /**
          * open the chat at index.
          * Must be the 'avatar' key or the index for 'contacts'.
@@ -212,8 +206,8 @@ createApp({
          * @param {*} index of the chat to open
          */
         openChat(index){
-            this.currentChatProfileID = this.checkIndex(index, 1);;
-            this.resetMessageClicked();
+            this.currentChatProfileID = this.checkIndex(index, 1);
+            this.messageIndex = '';
         },
         /**
          * check in contact if there is a name who includes the string typed.
@@ -223,15 +217,11 @@ createApp({
          * Lower Case
          */
         checkUsersIncludes(){
-            if(this.contactToSearch !== '' || this.contactToSearch == undefined){
-                this.contactsFound = this.contacts.filter((contact)=>{
-                    return  contact.name.includes(this.contactToSearch) || 
-                            contact.name.includes(this.contactToSearch.charAt(0).toUpperCase() + this.contactToSearch.substr(1, this.contactToSearch.length - 1));
-                });
-            }
-            else{
-                this.contactsFound = this.contacts;
-            }
+            const contactChat = this.contactToSearch.trim();
+            this.contactsFound = this.contacts.filter((contact)=>{
+                const contactChat = this.contactToSearch.trim();
+                contact.visible = contact.name.includes(contactChat);
+            });
         },
         /**
          * check in contact if there is a name which is equal to the string typed.
@@ -240,14 +230,13 @@ createApp({
          * writing 's' don't get 'Alessandro' but get 'Sandro'
          */
         checkUsers(){
-            // if(this.contactToSearch !== '' || this.contactToSearch == undefined){
-                this.contactsFound = this.contacts.filter((contact)=>{
-                    return contact.name.includes(this.contactToSearch.trim().charAt(0).toUpperCase() + this.contactToSearch.trim().substr(1, this.contactToSearch.trim().length - 1));
-                });
-            // }
-            // else{
-            //     this.contactsFound = this.contacts;
-            // }
+            const contactChat = this.contactToSearch.trim();
+            this.contacts.forEach((contact)=>{
+                contact.visible = contact.name.includes(contactChat.charAt(0).toUpperCase() + contactChat.substr(1, contactChat.length - 1));
+            });
+        },
+        getRandomInclusive(max, min){
+            return Math.floor(Math.random() * (max) + min);
         },
         /**
          * get a reply to send to the user.
@@ -256,18 +245,21 @@ createApp({
         getFeedback(){
             this.contacts[this.currentChatProfileID].messages.push({
                 date: this.setDateTime(),
-                message: this.getReply(Math.floor(Math.random() * (15 + 1))),
+                message: this.getReply(this.getRandomInclusive(15,1)),
                 status: 'received'
             });
-            this.contactsFound = this.contacts;
             this.getLastSent();
             this.checkUsers();
-            // this.mapContactsFound();
         },
+        /**
+         * generate a reply sentence with nWords
+         * @param {*} nWords the number of words of the sentence
+         * @returns the sentence
+         */
         getReply(nWords){
             let sentence = '';
             for (let i = 0; i < nWords; i++) {
-                sentence += parole[Math.floor(Math.random() *  (parole.length -1 + 1))] + ' ';
+                sentence += parole[this.getRandomInclusive(parole.length, 1)] + ' ';
             }
             return sentence;
         },
@@ -275,11 +267,12 @@ createApp({
          * send the user message and call a reply after 1 second with getFeedback
          */
         sendMessage(){
-            if(this.messageToSend.trim() !== ''){
+            const messageToSendTrim =this.messageToSend.trim();
+            if(messageToSendTrim !== ''){
 
                 this.contacts[this.currentChatProfileID].messages.push({
                     date: this.setDateTime(),
-                    message: this.messageToSend.trim(),
+                    message: messageToSendTrim,
                     status: 'sent'
                 });
                 setTimeout(this.getFeedback ,1000);
@@ -293,16 +286,16 @@ createApp({
          * @param {*} indexMessage the message related to the settings
          */
         toggleMessageSettings(indexMessage){
-            this.messageIndex = (indexMessage !== this.messageIndex) ? indexMessage : ''
+            this.messageIndex = (indexMessage !== this.messageIndex) ? indexMessage : '';
         },
         /**
          * delete the message selected by the settings
          */
         deleteMessage(){
-            //meglio destrutturare o spiegare meglio
             this.contacts[this.currentChatProfileID].messages.splice(this.messageIndex, 1);
-            // this.resetMessageClicked();
-            this.contactsFound = this.contacts;
+            this.toggleMessageSettings(this.messageIndex);
+
+            this.checkUsers();
         },
         /**
          * get a string with date or time based on a provided preset
@@ -323,16 +316,17 @@ createApp({
             const now = this.DateTime.now().toLocaleString(this.DateTime.DATETIME_SHORT_WITH_SECONDS).split(', ');
             return `${now[0]} ${now[1]}`;
         },
+        /**
+         * get in lastDates al the last message sent of every chat
+         */
         getLastSent(){
-            this.lastDates = this.contacts.map(contact => {
-                return contact.messages[contact.messages.length -1].date;
+            this.lastDates = this.contacts.map((contact, i) => {
+                return (contact.messages.length === 0 && this.lastDates[i] === undefined) ? '' : 
+                        (this.lastDates[i] !== undefined) ? this.lastDates[i] : contact.messages[contact.messages.length -1].date;
             });
         }
     },
     created(){
-        //adding the key lastDate to every chat in list for the date of last message sent
-        // this.mapContactsFound();
-        this.contactsFound = this.contacts;
         this.getLastSent();
 
         this.openChat(this.currentChatProfileID);
