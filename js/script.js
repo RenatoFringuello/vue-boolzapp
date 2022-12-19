@@ -175,8 +175,7 @@ createApp({
                         }
                     ],
                 },
-            ],
-            contactsFound : []
+            ]
         }
     },
 
@@ -218,8 +217,7 @@ createApp({
          */
         checkUsersIncludes(){
             const contactChat = this.contactToSearch.trim();
-            this.contactsFound = this.contacts.filter((contact)=>{
-                const contactChat = this.contactToSearch.trim();
+            this.contacts.forEach((contact)=>{
                 contact.visible = contact.name.includes(contactChat);
             });
         },
