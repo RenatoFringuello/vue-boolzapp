@@ -35,7 +35,7 @@
                             <i class="fa-solid my-text-secondary fa-ellipsis-vertical me-3"></i>
                         </div>
                     </header>
-                    <section class="contacts-wrapper h-100 overflow-scroll">
+                    <section class="contacts-wrapper h-100 overflow-auto">
                         <div class="contacts-top sticky-top position-relative">
                             <!-- banner -->
                             <div class="my-banner p-3 d-flex">
@@ -93,7 +93,7 @@
                         </div>
                     </header>
                     <!-- whole chat -->
-                    <section class="chat overflow-scroll">
+                    <section class="chat overflow-auto">
                         <div class="row g-0 px-2 px-md-5">
                             <div v-for="message,i in contacts[currentChatProfileID].messages" class="col-12 px-lg-5 py-1 d-flex " :class="(message.status === 'sent')? 'justify-content-end' : '' ">
                                 <div :class="'message-' + message.status" class="message position-relative rounded-2 d-flex justify-content-between align-items-end p-2 w-100">
